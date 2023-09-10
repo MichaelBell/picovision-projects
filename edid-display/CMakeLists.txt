@@ -1,18 +1,17 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Change your executable name to something creative!
-set(NAME gol) # <-- Name your project/executable here!
+set(NAME edid-display) # <-- Name your project/executable here!
 
 # Add your source files
 add_executable(${NAME}
     main.cpp # <-- Add source files here!
+    edid-decode.c
 )
 
 # Don't forget to link the libraries you need!
 target_link_libraries(${NAME}
-    pico_multicore
     hardware_uart
-    pimoroni_i2c
     picovision
     pico_graphics
 )

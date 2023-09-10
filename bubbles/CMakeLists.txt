@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Change your executable name to something creative!
-set(NAME gol) # <-- Name your project/executable here!
+set(NAME bubbles) # <-- Name your project/executable here!
 
 # Add your source files
 add_executable(${NAME}
@@ -10,9 +10,7 @@ add_executable(${NAME}
 
 # Don't forget to link the libraries you need!
 target_link_libraries(${NAME}
-    pico_multicore
     hardware_uart
-    pimoroni_i2c
     picovision
     pico_graphics
 )
