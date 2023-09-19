@@ -416,8 +416,9 @@ int main() {
         gol_generation();
         absolute_time_t mid_time = get_absolute_time();
         //printf("Computing gen %d took %.2fms\n", gol.gen_count, absolute_time_diff_us(start_time, mid_time) * 0.001f);
+        display.wait_for_flip();
         display_gol();
         printf("Gen %d Compute %.2fms, draw %.2fms\n", gol.gen_count, absolute_time_diff_us(start_time, mid_time) * 0.001f, absolute_time_diff_us(mid_time, get_absolute_time()) * 0.001f);
-        display.flip();
+        display.flip_async();
     }
 }

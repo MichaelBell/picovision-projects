@@ -63,10 +63,10 @@ int main() {
   display.flip();
 
   while (true) {
-    if (display.is_button_b_pressed()) {
+    if (display.is_button_x_pressed()) {
       display.set_display_offset({0, DISPLAY_HEIGHT});
     }
-    else if (display.is_button_c_pressed()) {
+    else if (display.is_button_a_pressed()) {
       display.set_display_offset({0, 0});
     }
 

@@ -39,10 +39,10 @@ int main() {
   irq_set_enabled(UART1_IRQ, true);
   uart_set_irq_enables(uart1, true, false);
 
-  constexpr uint BUTTON_A = 9;
-  gpio_init(BUTTON_A);
-  gpio_set_dir(BUTTON_A, GPIO_IN);
-  gpio_pull_up(BUTTON_A);
+  constexpr uint BUTTON_Y = 9;
+  gpio_init(BUTTON_Y);
+  gpio_set_dir(BUTTON_Y, GPIO_IN);
+  gpio_pull_up(BUTTON_Y);
 
   //sleep_ms(5000);
 
@@ -178,9 +178,9 @@ int main() {
 
     char buffer[8];
     sprintf(buffer, "%s %s %s", 
-            gpio_get(BUTTON_A) == 0 ? "A" : " ", 
-            display.is_button_b_pressed() ? "B" : " ",
-            display.is_button_c_pressed() ? "C" : " ");
+            gpio_get(BUTTON_Y) == 0 ? "Y" : " ", 
+            display.is_button_x_pressed() ? "X" : " ",
+            display.is_button_a_pressed() ? "A" : " ");
     graphics.set_pen(0, 0, 0);
     graphics.text(buffer, {500,10}, FRAME_WIDTH - 500, 3);
 
@@ -209,7 +209,7 @@ int main() {
     ++frames;
     display.set_gpio_hi_pull_up_all(frames & 0x3F);
     display.set_gpio_hi_pull_down_all(~(frames & 0x3F));
-    if (gpio_get(BUTTON_A) == 0) display.set_led_level((uint8_t)frames);
+    if (gpio_get(BUTTON_Y) == 0) display.set_led_level((uint8_t)frames);
     else display.set_led_heartbeat();
   }
 }
