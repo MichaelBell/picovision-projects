@@ -16,8 +16,6 @@ include(picovision_import.cmake)
 # Include required libraries
 # This assumes `pimoroni-pico` is stored alongside your project
 include(common/pimoroni_i2c)
-include(drivers/aps6404/aps6404)
-include(drivers/dv_display/dv_display)
 include(libraries/pico_graphics/pico_graphics)
 include(libraries/pico_vector/pico_vector)
 

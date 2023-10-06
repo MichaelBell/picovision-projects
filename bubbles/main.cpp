@@ -25,7 +25,7 @@ void on_uart_rx() {
 }
 
 int main() {
-  set_sys_clock_khz(216000, true);
+  set_sys_clock_khz(200000, true);
 
   stdio_init_all();
 
@@ -38,6 +38,8 @@ int main() {
   irq_set_exclusive_handler(UART1_IRQ, on_uart_rx);
   irq_set_enabled(UART1_IRQ, true);
   uart_set_irq_enables(uart1, true, false);
+
+  DVDisplay::preinit();
 
   constexpr uint BUTTON_Y = 9;
   gpio_init(BUTTON_Y);

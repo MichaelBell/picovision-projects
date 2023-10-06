@@ -1,4 +1,4 @@
-# This file can be dropped into a project to help locate the Pimoroni Pico libraries
+# This file can be dropped into a project to help locate the Picovision library
 # It will also set up the required include and module search paths.
 
 if (NOT PIMORONI_PICOVISION_PATH)

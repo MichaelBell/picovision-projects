@@ -43,12 +43,15 @@ int main() {
 
   sleep_ms(5000);
 
+  DVDisplay::preinit();
+
   DVDisplay display;
   display.init(DISPLAY_WIDTH, DISPLAY_HEIGHT, DVDisplay::MODE_RGB555, FRAME_WIDTH, FRAME_HEIGHT);
   PicoGraphics_PenDV_RGB555 graphics(FRAME_WIDTH, FRAME_HEIGHT, display);
 
   graphics.set_pen(0, 0, 0);
   graphics.clear();
+  display.set_scroll_idx_for_lines(1, 0, DISPLAY_HEIGHT);
   display.flip();
 
   uint8_t edid[128];
@@ -60,14 +63,15 @@ int main() {
   graphics.set_pen(200, 200, 200);
   graphics.set_font("bitmap8");
   graphics.text(decoded_edid, {0, 0}, FRAME_WIDTH);
+  display.set_scroll_idx_for_lines(1, 0, DISPLAY_HEIGHT);
   display.flip();
 
   while (true) {
     if (display.is_button_x_pressed()) {
-      display.set_display_offset({0, DISPLAY_HEIGHT});
+      display.setup_scroll_group({0, DISPLAY_HEIGHT});
     }
     else if (display.is_button_a_pressed()) {
-      display.set_display_offset({0, 0});
+      display.setup_scroll_group({0, 0});
     }
 
     sleep_ms(50);

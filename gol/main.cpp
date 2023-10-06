@@ -396,6 +396,8 @@ int main() {
   irq_set_enabled(UART1_IRQ, true);
   uart_set_irq_enables(uart1, true, false);
 
+  DVDisplay::preinit();
+
   display.init(FRAME_WIDTH, FRAME_HEIGHT, DVDisplay::MODE_PALETTE, FRAME_WIDTH, FRAME_HEIGHT);
 
     init_palette();
