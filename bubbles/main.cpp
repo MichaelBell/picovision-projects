@@ -9,11 +9,13 @@
 
 using namespace pimoroni;
 
-#define DISPLAY_WIDTH 360
+#define DISPLAY_WIDTH 800
 #define DISPLAY_HEIGHT 480
 
 #define FRAME_WIDTH 1000
 #define FRAME_HEIGHT 600
+
+#define USE_RGB888 0
 
 DVDisplay display;
 
@@ -87,10 +89,16 @@ int main() {
 
   //sleep_ms(5000);
 
+#if USE_RGB888
   DVDisplay::Mode mode = DVDisplay::MODE_RGB888;
   display.init(DISPLAY_WIDTH, DISPLAY_HEIGHT, mode, FRAME_WIDTH, FRAME_HEIGHT);
-
   PicoGraphicsDV* graphics = new PicoGraphics_PenDV_RGB888(FRAME_WIDTH, FRAME_HEIGHT, display);
+#else
+  DVDisplay::Mode mode = DVDisplay::MODE_RGB555;
+  display.init(DISPLAY_WIDTH, DISPLAY_HEIGHT, mode, FRAME_WIDTH, FRAME_HEIGHT);
+  PicoGraphicsDV* graphics = new PicoGraphics_PenDV_RGB555(FRAME_WIDTH, FRAME_HEIGHT, display);
+#endif
+
   setup_pen(graphics, mode);
 
   printf("Starting\n");
@@ -205,6 +213,7 @@ int main() {
 
     if (display.is_button_a_pressed()) {
       delete graphics;
+#if USE_RGB888      
       if (mode == DVDisplay::MODE_RGB888) {
         graphics = new PicoGraphics_PenDV_P5(FRAME_WIDTH, FRAME_HEIGHT, display);
         mode = DVDisplay::MODE_PALETTE;
@@ -215,6 +224,18 @@ int main() {
         mode = DVDisplay::MODE_RGB888;
         display.set_mode(mode);
       }
+#else
+      if (mode == DVDisplay::MODE_RGB555) {
+        graphics = new PicoGraphics_PenDV_P5(FRAME_WIDTH, FRAME_HEIGHT, display);
+        mode = DVDisplay::MODE_PALETTE;
+        display.set_mode(mode);
+      }
+      else {
+        graphics = new PicoGraphics_PenDV_RGB555(FRAME_WIDTH, FRAME_HEIGHT, display);
+        mode = DVDisplay::MODE_RGB555;
+        display.set_mode(mode);
+      }
+#endif
       setup_pen(graphics, mode);
     }
   }

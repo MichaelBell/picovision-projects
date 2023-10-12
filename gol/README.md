@@ -1,6 +1,6 @@
-# Conway's Game of Life for PicoDV
+# Conway's Game of Life for PicoVision
 
-Conway's game of life implementation for DV Stick.
+Conway's game of life implementation for PicoVision.
 
 Code needs some structuring, but the basics are there to either run starting from a random start or from standard Game of Life RLE data.
 

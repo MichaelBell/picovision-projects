@@ -1,22 +1,22 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Change your executable name to something creative!
-set(NAME bubbles) # <-- Name your project/executable here!
+set(NAME dv-mandel) # <-- Name your project/executable here!
 
 # Add your source files
 add_executable(${NAME}
     main.cpp # <-- Add source files here!
+    mandelbrot.c
 )
 
 # Don't forget to link the libraries you need!
 target_link_libraries(${NAME}
+    pico_multicore
     hardware_uart
+    hardware_interp
+    pimoroni_i2c
     picovision
     pico_graphics
-)
-
-target_compile_definitions(${NAME} PRIVATE
-    -DSUPPORT_WIDE_MODES=1
 )
 
 pico_enable_stdio_usb(${NAME} 1)
