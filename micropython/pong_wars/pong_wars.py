@@ -88,8 +88,8 @@ BALL_LIGHT = 0
 field = Field()
 for _ in range(2):
     field.draw()
-    display.load_sprite("ball-dark.png", BALL_DARK)
-    display.load_sprite("ball-light.png", BALL_LIGHT)
+    display.load_sprite("pong_wars/ball-dark.png", BALL_DARK)
+    display.load_sprite("pong_wars/ball-light.png", BALL_LIGHT)
     display.update()
 
 BOUNDS_FOR_BALL = (BORDER_X, BORDER_Y, WIDTH - BORDER_X - 16, HEIGHT - BORDER_Y - 16)
