@@ -10,9 +10,9 @@ uint32_t get_random_bit() {
     return rosc_hw->randombit & 1;
 }
 
-uint32_t get_2_random_bits() {
+uint32_t get_random_bits(int n) {
     uint32_t rv = 0;
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < n; ++i) {
         if (get_random_bit()) rv |= 1 << i;
     }
     return rv;
@@ -72,21 +72,36 @@ uint8_t frame[FRAME_WIDTH * FRAME_HEIGHT + 1];
 
 void init_fire() {
     memset(frame, 0, FRAME_WIDTH * (FRAME_HEIGHT - 1));
-    memset(&frame[FRAME_WIDTH * (FRAME_HEIGHT - 1)], 31 << 2, FRAME_WIDTH + 1);
+    for (int x = 0; x < FRAME_WIDTH; ++x) {
+        uint32_t colour = get_random_bits(6);
+        frame[FRAME_WIDTH * (FRAME_HEIGHT - 1) + x] = colour << 2;
+    }
 }
 
 void step_fire() {
     for (int y = 1; y < FRAME_HEIGHT; ++y) {
         for (int x = 0; x < FRAME_WIDTH; ++x) {
-            uint32_t rand = get_2_random_bits();
+            uint32_t rand = get_random_bits(2);
             //if (rand == 3) rand = 0;
             uint8_t source = frame[y * FRAME_WIDTH + x];
+            if (source > 124) source = 124;
             if (source > 0) {
                 frame[((y - 1) * FRAME_WIDTH) + x - 1 + rand] = source - 4 * get_random_bit();
             }
         }
         display.write_palette_pixel_span({0, y-1}, FRAME_WIDTH, &frame[(y-1) * FRAME_WIDTH]);
     }
+
+    for (int x = 0; x < FRAME_WIDTH; ++x) {
+        uint32_t colour = frame[FRAME_WIDTH * (FRAME_HEIGHT - 1) + x];
+        int32_t rand = get_random_bits(2);
+        if (rand < 3 && colour < 252 && colour > 4) {
+            rand -= 1;
+            colour += rand * 4;
+            frame[FRAME_WIDTH * (FRAME_HEIGHT - 1) + x] = colour;
+        }
+    }
+
     display.write_palette_pixel_span({0, FRAME_HEIGHT - 1}, FRAME_WIDTH, &frame[(FRAME_HEIGHT - 1) * FRAME_WIDTH]);
 }
 
